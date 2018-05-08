@@ -5,11 +5,11 @@
 	This repo provides a flask web service skeleton with a ready to deply nginx container under the /flaskSkeleton folder.
 	Suggests running micro-services using this skeleton.
 
-### Add python package
+#### Add python package
 
 	To add python package, add the package name into /app/requirements.txt
 
-### Run as local server
+#### Run as local server
 * `python main.py`
 
 
@@ -17,31 +17,32 @@
 	This repo provides a Django web service skeleton with a ready to deply nginx container under the /djangoSkeleton folder.
 	Suggest to use this skeletion while developing front-end internet facing web services.
 
-### Add python package
+#### Add python package
 
 	To add python package, add the package name into /app/requirements.txt
 
-### Before running local server
+#### Before running local server
 
 	Need to perform a data migration first as following.
  
 * `python3 manage.py makemigrations`
 * `python3 manage.py migrate --run-syncd`
 
-### Run as local server
+#### Run as local server
 * `python manager.py runserver`
 
 
 ## Production using container
 
-### Build image
+#### Build image
 
 	This step requires sudo. Suggest sign in as super user using 'su'.
 
 	Build image:
+	
 * `docker build -t <image_name> .`
 
-### Run image
+#### Run image
 
 * `docker run --rm -d -p 4000:80 <image_name>`
 
@@ -50,23 +51,23 @@
 			 - p: map outside port: insider port
 			--rm: remove the container upon exit
 
-### Push to docker for deployment
+#### Push to docker for deployment
 
-#### Tag the image
+##### 1. Tag the image
 
 * `docker tag SOURCE_IMAGE[:TAG] account/repository:tag`
 	Current default format for this project: 
 * `docker tag SOURCE_IMAGE[:TAG] mcgong/service_name:version`
 
-#### Login using docker credentials
+##### 2. Login using docker credentials
 	* `docker login`
 
-#### Push to docker
+##### 3. Push to docker
 * `docker push account/repository:tag`
 	Current default format for this project: 
 * `docker push mcgong/service_name:version`
 
-#### Notify the maintainer through slack
+##### 4. Notify the maintainer through slack
 	Notify the maintainer at the SmileyApp backend team on Slack.
 	Need to mention: 
 		1. service_name
