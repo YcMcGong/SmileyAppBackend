@@ -1,9 +1,26 @@
 # SmileyAppBackend
 	Third version of SmileyAppBackend, completely migrated to AWS and microservices architecture.
+	
+#### Table of content
+	1. System Design
+	2. Flask Skeleton
+	3. Django Skeleton
+	4. Docker container for deployment
+	5. AWS credentials
+	6. License
 
 ## System Design
 	The following is the diagram of the smileyBackend. It contains mciro-services and web applications.
-	
+#### Web Server
+	A Django based internet facing server to process the requests from the mobile/web front end.
+#### AuthService
+	Authenticate user credential, hanlde sign up, and store user data
+#### attractionService
+	Manage attraction, and automatically attach post for the same attraction into the news feed of the corresponding attraction.
+#### relationService
+	Manage user-user, user-attraction relations. It is basically a graph database built on top of DynamoDB. attractionService will notify relationService for any new post. relationService will publish these changes to the mapService.
+#### mapService
+	It renders a list of attractions for each user.
 ![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/design_3.png)
 
 ## Flask Skeleton
@@ -36,8 +53,7 @@
 #### Run as local server
 * `python manager.py runserver`
 
-
-## Production using container
+## Docker container for deployment
 
 #### Build image
 
@@ -84,6 +100,10 @@
 	Bash into container to check files
 * `docker run -ti -p 4000:80 <image_name> bash`
 
+## AWS credentials
+	For testing, all credential should be placed into a file named config.py.
+	The name config.py is added into the .gitignore file, and will be ignored when pushing to github.
+	In production, all EC2 instances will be assign IAM roles, there is no need to attach credentials into the code.
 
 ## License
 
