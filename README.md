@@ -6,24 +6,25 @@
 	2. Flask Skeleton
 	3. Django Skeleton
 	4. Docker container for deployment
-	5. AWS credentials
-	6. License
+	5. Endpoints
+	6. AWS credentials
+	7. License
 
-## System Design
+## 1. System Design
 	The following is the diagram of the smileyBackend. It contains mciro-services and web applications.
 ![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/design_3.png)
-#### Web Server
+#### a) Web Server
 	A Django based internet facing server to process the requests from the mobile/web front end.
-#### AuthService
+#### b) AuthService
 	Authenticate user credential, hanlde sign up, and store user data
-#### attractionService
+#### c) attractionService
 	Manage attraction, and automatically attach post for the same attraction into the news feed of the corresponding attraction.
-#### relationService
+#### d) relationService
 	Manage user-user, user-attraction relations. It is basically a graph database built on top of DynamoDB. attractionService will notify relationService for any new post. relationService will publish these changes to the mapService.
-#### mapService
+#### e) mapService
 	It renders a list of attractions for each user.
 
-## Flask Skeleton
+## 2. Flask Skeleton
 	This repo provides a flask web service skeleton with a ready to deply nginx container under the /flaskSkeleton folder.
 	Suggests running micro-services using this skeleton.
 
@@ -35,7 +36,7 @@
 * `python main.py`
 
 
-## Django Skeleton
+## 3. Django Skeleton
 	This repo provides a Django web service skeleton with a ready to deply nginx container under the /djangoSkeleton folder.
 	Suggest to use this skeletion while developing front-end internet facing web services.
 
@@ -53,7 +54,7 @@
 #### Run as local server
 * `python manager.py runserver`
 
-## Docker container for deployment
+## 4. Docker container for deployment
 
 #### Build image
 
@@ -100,12 +101,29 @@
 	Bash into container to check files
 * `docker run -ti -p 4000:80 <image_name> bash`
 
-## AWS credentials
+## 5. Endpoints
+
+#### a) Test endpoint
+	webServer: localhost:3000
+	authService: localhost:4000
+	attractionService: localhost:6000
+	relationService: localhost:7000
+	mapService: localhost:8000
+
+#### b) Production endpoint
+	Production endpoint will be managed by route 53 and load balancer.
+	webServer: web.mysmileapp.com
+	authService: auth.mysmileapp.com
+	attractionService: attraction.mysmileapp.com
+	relationService: relation.mysmileapp.com
+	mapService: map.mysmileapp.com
+
+## 6. AWS credentials
 	For testing, all credential should be placed into a file named config.py.
 	The name config.py is added into the .gitignore file, and will be ignored when pushing to github.
 	In production, all EC2 instances will be assign IAM roles, there is no need to attach credentials into the code.
 
-## License
+## 7. License
 
 ### All Rights Reserved
 	/* Copyright (C) 2018 Yicong Gong & Repo Collabrators
