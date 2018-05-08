@@ -11,6 +11,7 @@
 
 ## System Design
 	The following is the diagram of the smileyBackend. It contains mciro-services and web applications.
+![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/design_3.png)
 #### Web Server
 	A Django based internet facing server to process the requests from the mobile/web front end.
 #### AuthService
@@ -21,7 +22,6 @@
 	Manage user-user, user-attraction relations. It is basically a graph database built on top of DynamoDB. attractionService will notify relationService for any new post. relationService will publish these changes to the mapService.
 #### mapService
 	It renders a list of attractions for each user.
-![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/design_3.png)
 
 ## Flask Skeleton
 	This repo provides a flask web service skeleton with a ready to deply nginx container under the /flaskSkeleton folder.
