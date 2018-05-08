@@ -3,6 +3,7 @@
 
 ## System Design
 	The following is the diagram of the smileyBackend. It contains mciro-services and web applications.
+	
 ![alt text](https://drive.google.com/open?id=1nHWYZ8eu_TAPfSvVobs4iM4icbiAxN8n)
 
 ## Flask Skeleton
