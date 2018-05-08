@@ -4,7 +4,7 @@
 ## System Design
 	The following is the diagram of the smileyBackend. It contains mciro-services and web applications.
 	
-![alt text](https://drive.google.com/open?id=1nHWYZ8eu_TAPfSvVobs4iM4icbiAxN8n)
+![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/system_design.jpg)
 
 ## Flask Skeleton
 	This repo provides a flask web service skeleton with a ready to deply nginx container under the /flaskSkeleton folder.
