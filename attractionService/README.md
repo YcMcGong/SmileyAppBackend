@@ -62,13 +62,13 @@ Bash into container to check files
 * `docker run -ti -p 4000:80 <image_name> bash`
 
 ## License
-/* Copyright (C) Yicong Gong
-Authorized contributors granted copy rights for this software.
-All rights reserved, for demostration and collaboration purpose only.
+	/* Copyright (C) Yicong Gong
+	Authorized contributors granted copy rights for this software.
+	All rights reserved, for demostration and collaboration purpose only.
 
-The nginx-flask docker file itself is under Apache license from other author.
-Its original repo is here.
-https://github.com/tiangolo/uwsgi-nginx-flask-docker
+	The nginx-flask docker file itself is under Apache license from other author.
+	Its original repo is here.
+	https://github.com/tiangolo/uwsgi-nginx-flask-docker
 
 	 
 	
