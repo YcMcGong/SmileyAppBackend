@@ -98,7 +98,7 @@ def query(table_name, partitionKeyName, partitionKey):
 
 # batch get
 def get_item(table_name, partitionKeyName, partitionKey, sortingKeyName, sortingKey):
-    table = dynamodb.Table('friend')
+    table = dynamodb.Table(table_name)
     response = table.get_item(
         Key={
             partitionKeyName: partitionKey,
