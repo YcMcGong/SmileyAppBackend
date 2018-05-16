@@ -5,26 +5,38 @@ This is the project skeleton based on Flask.
 Nginx web server is implemented and ready for deployment in the container.
 Suggests running micro-services using this skeleton.
 
+## API
+	/: healthCheck
+	
+	/add_follow: add a follower
+		-- format:{from_user:string(ID), to_user:string(ID)}
+		
+	/delete_follow: delete a follower
+		-- format:{from_user:string(ID), to_user:string(ID)}
+		
+	/momentPost: post a moment
+		-- format:{moment_ID:string, attraction_ID:string, user_ID:string}
+
 ## Development
 
-### Add python package
+#### Add python package
 
 To add python package, add the package name into /app/requirements.txt
 
-### Run as local server
+#### Run as local server
 * `python main.py`
 
 
 ## Production
 
-### Build image
+#### Build image
 
 This step requires sudo. Suggest sign in as super user using 'su'.
 
 Build image:
 * `docker build -t <image_name> .`
 
-### Run image
+#### Run image
 
 * `docker run --rm -d -p 4000:80 <image_name>`
 
@@ -33,23 +45,23 @@ Note:
 	 - p: map outside port: insider port
 	--rm: remove the container upon exit
 
-### Push to docker for deployment
+#### Push to docker for deployment
 
-#### Tag the image
+##### Tag the image
 
 * `docker tag SOURCE_IMAGE[:TAG] account/repository:tag`
 Current default format for this project: 
 * `docker tag SOURCE_IMAGE[:TAG] mcgong/service_name:version`
 
-#### Login using docker credentials
+##### Login using docker credentials
 * `docker login`
 
-#### Push to docker
+##### Push to docker
 * `docker push account/repository:tag`
 Current default format for this project: 
 * `docker push mcgong/service_name:version`
 
-#### Notify the maintainer through slack
+##### Notify the maintainer through slack
 Notify the maintainer at the SmileyApp backend team on Slack.
 Need to mention: 
 	1. service_name
