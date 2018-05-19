@@ -1,5 +1,4 @@
 from django.apps import AppConfig
 
-
-class AppConfig(AppConfig):
+class SmileAppConfig(AppConfig):
     name = 'App'

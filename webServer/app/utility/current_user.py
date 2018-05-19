@@ -1,7 +1,7 @@
 """
 # current_user is a package of functions to access the local DB to track the sessions
 """
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from App.models import User
 
 def get_user_id(request):
@@ -20,3 +20,6 @@ def login_user(request, user_id):
         user = User.objects.create_user(user_id=user_id, password = 'password')
 
     login(request, user)
+
+def logout_user(request):
+    logout(request)
