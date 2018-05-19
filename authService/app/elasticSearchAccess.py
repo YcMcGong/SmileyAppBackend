@@ -11,9 +11,10 @@ from datetime import datetime
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 from requests_aws4auth import AWS4Auth
 from config import aws_access_key_id, aws_secret_access_key
+from endpoints import REGION, ELASTIC_SEARCH_ENDPOINT, DEFAULT_USER_INDEX, USER_TYPE
 
 awsauth = AWS4Auth(aws_access_key_id, aws_secret_access_key, 'us-west-1', 'es')
-host = 'search-mysmileapp-qebinjxpqr32k7pdq3edignhiu.us-west-1.es.amazonaws.com'
+host = ELASTIC_SEARCH_ENDPOINT
 
 es = Elasticsearch(
     hosts=[{'host': host, 'port': 443}],
@@ -22,9 +23,6 @@ es = Elasticsearch(
     verify_certs=True,
     connection_class=RequestsHttpConnection
 )
-
-DEFAULT_USER_INDEX = 'user-index-1'
-USER_TYPE = 'user'
 
 # index a document
 def index_document(index, type, body, id = None):

@@ -44,8 +44,19 @@ def user_sign_up():
                     status.set_errorMessage('username already exist')
                     return status.get_response()
                 except:
-                    response = dataAccess.user_sign_up(email, password, firstName, lastName, username)
-                    status.attach_data('data', response, isSuccess=True)
+                    user_ID = dataAccess.user_sign_up(email, password, firstName, lastName, username)
+                    status.attach_data('user_ID', response, isSuccess=True)
+                    url = dataAccess.user_upload_profile_photo(user_ID)
+                    status.attach_data('profile_upload_url', url)
+    return status.get_response()
+
+@app.route("/user_upload_profile_url", methods = ['GET'])
+def user_upload_profile_url():
+    if request.method == 'GET':
+        user_ID = request.args.get('user_ID')
+        status = status_response()
+        url = dataAccess.user_upload_profile_photo(user_ID)
+        status.attach_data('profile_upload_url', url)
     return status.get_response()
 
 """
@@ -87,6 +98,20 @@ def user_get_data():
             status.attach_data('data', response, isSuccess=True)
         except:
             status.set_errorMessage('user_ID not exist')
+    return status.get_response()
+
+"""
+#_______________________
+#   Search users        |
+#_______________________|
+"""
+@app.route("/search_user", methods = ['GET'])
+def user_get_data():
+    status = status_response()
+    if request.method == 'GET':
+        label = request.args.get('label')
+        data = dataAccess.user_search(label)
+        status.attach_data('data', data, isSuccess=True)
     return status.get_response()
 
 
