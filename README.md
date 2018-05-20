@@ -7,7 +7,7 @@
 	The goal of this project, is to provide a platform developers can contribute to, to:
 	
 	1. Test and try out their new programming ideas.
-	2. Build a cloud-based group of micro-services to find interesting places to go for the weekend.
+	2. Build a group of cloud-based micro-services to find interesting places to go for the weekend.
 	
 #### Table of content
 	1. System Design
