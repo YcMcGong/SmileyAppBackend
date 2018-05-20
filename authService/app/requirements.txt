@@ -1,1 +1,5 @@
 requests
+boto3
+elasticsearch
+certifi
+requests-aws4auth
