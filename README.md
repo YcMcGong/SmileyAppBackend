@@ -1,7 +1,7 @@
 # SmileyAppBackend
 	Third version of SmileyAppBackend, completely migrated to AWS and microservices architecture.
 #### MySmileApp Project
-![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/design_3.png)
+![alt text](https://s3-us-west-1.amazonaws.com/smileyfilehostpublic/mysmile.jpg)
 	MySmileApp is an collabration project for programmers who love urban-exploration to share their favorite places.
 	The goal of this project, is to provide a platform developers can contribute to, to
 	1. Test and try out their new programming ideas.
