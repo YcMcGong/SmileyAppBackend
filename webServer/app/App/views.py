@@ -1,8 +1,9 @@
 import json
 import os
-from django.http import JsonResponse
+from django.http import JsonResponse, QueryDict, HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.template import Context, Template
+from django.views.decorators.csrf import csrf_exempt
 
 # import utility
 from utility import current_user
@@ -15,7 +16,7 @@ import serviceAPI
 # |________________________________________|
 """
 def welcome(request):
-    return 'Welcome to my smile app'
+    HttpResponse('Welcome to my smile app')
 
 """
 #  ________________________________________
@@ -28,17 +29,18 @@ def pre_user_login(request):
     if request.method == 'GET':
         if request.user.is_authenticated:
             status.set_status(True)
-    return status.get_response()
+    return JsonResponse(status.data)
 
 # Login function
+@csrf_exempt
 def user_login(request):
     status = status_response()
     if request.method == 'POST':
         # Read data
-        email = request.form.get('email')
-        username = request.form.get('username')
-        user_ID = request.form.get('user_ID')
-        password = request.form.get('password')
+        email = request.POST.get('email')
+        username = request.POST.get('username')
+        user_ID = request.POST.get('user_ID')
+        password = request.POST.get('password')
 
         response = serviceAPI.authService.user_authenticate(email=email, username=username, user_ID=user_ID, password=password)
 
@@ -47,7 +49,7 @@ def user_login(request):
             user_id = response['user_ID']
             current_user.login_user(request, user_id)
             status.set_status(True)
-    return status.get_response()
+    return JsonResponse(status.data)
 
 # Logout function
 def user_logout(request):
@@ -55,18 +57,19 @@ def user_logout(request):
     if request.method == 'GET':
         current_user.logout_user(request)
         status.set_status(True)
-    return status.get_response()
+    return JsonResponse(status.data)
 
 # Create User
+@csrf_exempt
 def create_user(request):
     status = status_response()
     if request.method == 'POST':
         # Read data
-        email = request.form.get('email')
-        password = request.form.get('password')
-        firstName = request.form.get('firstName')
-        lastName = request.form.get('lastName')
-        username = request.form.get('username')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        firstName = request.POST.get('firstName')
+        lastName = request.POST.get('lastName')
+        username = request.POST.get('username')
 
         # Check if all fields valid
         if email and password and firstName and lastName and username:
@@ -80,7 +83,7 @@ def create_user(request):
                 status.set_errorMessage('DB failed')
         else:
             status.set_errorMessage('fields not valid')
-    return status.get_response()           
+    return JsonResponse(status.data)           
 
 """
 #  ________________________________________
@@ -97,27 +100,28 @@ def get_my_profile(request):
 
         if data['status']:
             status.attach_data('data', data, isSuccess=True)
-    return status.get_response() 
+    return JsonResponse(status.data) 
 
 # Get profile information
 def get_profile(request):
     status = status_response()
     if request.method == 'GET':
         # Read data
-        email = request.args.get('email')
-        username = request.args.get('username')
-        user_ID = request.args.get('user_ID')
+        email = request.GET.get('email')
+        username = request.GET.get('username')
+        user_ID = request.GET.get('user_ID')
         data = serviceAPI.authService.user_get_profile(user_ID=user_ID, username=username, email=email)
 
         if data['status']:
             status.attach_data('data', data, isSuccess=True)
-    return status.get_response() 
+    return JsonResponse(status.data) 
 
 """
 #  ________________________________________
 # | Friend & Relationship Section          |
 # |________________________________________|
 """
+@csrf_exempt
 def get_friendlist(request):
     status = status_response()
     # Get friend list
@@ -128,20 +132,20 @@ def get_friendlist(request):
     
     # Follow a friend
     elif request.method == 'POST':
-        follow_ID = request.form.get('follow_ID')
+        follow_ID = request.POST.get('follow_ID')
         response = serviceAPI.relationService.add_follow(follow_ID)
         if response['status']:
             status.attach_data('data', data, isSuccess=True)
 
     # Delete a friend
     elif request.method == 'DELETE':
-        email = request.args.get('email')
-        follow_ID = request.form.get('follow_ID')
+        email = QueryDict(request.body).get('email')
+        follow_ID = QueryDict(request.body).get('follow_ID')
         response = serviceAPI.relationService.delete_follow(follow_ID)
         if response['status']:
             status.attach_data('data', data, isSuccess=True)
 
-    return status.get_response()
+    return JsonResponse(status.data)
 """
 #  ________________________________________
 # | Map related Session                    |
@@ -154,7 +158,7 @@ def get_map(request):
         data = serviceAPI.mapService.load_map(current_user.get_user_id(request))
         if data['status']:
             status.attach_data('data', data, isSuccess=True)
-    return status.get_response()
+    return JsonResponse(status.data)
 
 """
 #  ________________________________________
@@ -163,16 +167,17 @@ def get_map(request):
 """
 
 # Attraction View
+@csrf_exempt
 def new_moment(request):
     status = status_response()
     # Create an attraction
     if request.method == 'POST':
         # Read Data
-        name = request.form.get('name')
-        lat = request.form.get('lat')
-        lng = request.form.get('lng')
-        intro = request.form.get('intro')
-        rating = request.form.get('rating')
+        name = request.POST.get('name')
+        lat = request.POST.get('lat')
+        lng = request.POST.get('lng')
+        intro = request.POST.get('intro')
+        rating = request.POST.get('rating')
 
         # Calculate the score based on the user experience and the rating
         score = (float(rating) + 10)
@@ -182,7 +187,7 @@ def new_moment(request):
         response = serviceAPI.attractionService.postMoment(name, lat, lng, intro, rating, user_ID)
         if response['status']:
             status.set_status(True)
-    return status.get_response()
+    return JsonResponse(status.data)
 # return marker
 
 """
@@ -194,12 +199,12 @@ def new_moment(request):
 def get_list_of_places_near_a_coordinate(request):
     status = status_response()
     if request.method == 'GET':
-        lat = request.args.get('lat')
-        lng = request.args.get('lng')
+        lat = request.GET.get('lat')
+        lng = request.GETs.get('lng')
         data = serviceAPI.attractionService.findNearbyAttraction(lat, lng)
         if data['status']:
             status.set_status(True)
-    return status.get_response()
+    return JsonResponse(status.data)
 
 """
 #  ________________________________________
@@ -211,9 +216,9 @@ def get_list_of_places_near_a_coordinate(request):
 def request_place_look_up(request):
     status = status_response()
     if request.method == 'GET':
-        attraction_ID = request.args.get('attraction_ID')
+        attraction_ID = request.GET.get('attraction_ID')
         user_ID = current_user.get_user_id(request)
         data = serviceAPI.mapService.get_attraction_moment(user_ID, attraction_ID)
         if data['status']:
             status.attach_data('data', data, isSuccess=True)
-    return status.get_response()
+    return JsonResponse(status.data)
