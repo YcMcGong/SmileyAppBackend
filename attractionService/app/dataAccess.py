@@ -22,6 +22,12 @@ def write_attraction(attraction_ID, user_ID, longitude, latitude, intro, resourc
 def write_moment(MOMENT_TABLE, attraction_ID, moment_ID, user_ID, intro, resource):
     dynamoAccess.add(MOMENT_TABLE, 'attraction_ID', attraction_ID, 'moment_ID', moment_ID, 'user_ID', user_ID, 'intro', intro, 'resource', resource)
 
+def get_attraction(attraction_ID):
+    dynamoAccess.get_item(ATTRACTION_TABLE, 'attraction_ID', attraction_ID)
+
+def delete_moment(attraction, moment_ID):
+    dynamoAccess.delete(MOMENT_TABLE, 'attraction_ID', attraction_ID, 'moment_ID', moment_ID)
+
 # unit test
 if __name__ == '__main__':
     # print(user_sign_up('test@gmail.com', '123', 'mc', 'king', 'user_01', job = 'student'))
