@@ -24,8 +24,7 @@ class status_response():
 
     def attach_data(self, name, data, isSuccess = False):
         self.data[name] = data
-        if isSuccess:
-            self.data['status'] = True
+        self.data['status'] = isSuccess
 
     def get_response(self):
         return jsonify(self.data)

@@ -1,3 +1,10 @@
+"""
+____________________________________________________
+ Copyright 2018 Bangtian Zhou
+ All rights reserved, for demostration purpose only.
+____________________________________________________
+
+"""
 from flask import Flask, render_template, request, redirect, url_for, flash, current_app, jsonify
 
 import dbAccess

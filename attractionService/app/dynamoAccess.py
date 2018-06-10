@@ -1,6 +1,6 @@
 """
 ____________________________________________________
- Copyright 2018 Yicong Gong
+ Copyright 2018 Bangtian Zhou
  All rights reserved, for demostration purpose only.
 ____________________________________________________
 This file provides low-level DynamoDB interfaces.
