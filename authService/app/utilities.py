@@ -13,19 +13,18 @@ class status_response():
     def __init__(self):
         self.data = {
             'status': False,
-            'errorMessage': ''
+            'errorMessage': []
         }
 
     def set_status(self, isSuccess):
         self.data['status'] = isSuccess
 
     def set_errorMessage(self, message):
-        self.data['errorMessage'] = message
+        self.data['errorMessage'] = self.data['errorMessage'].push(message)
 
     def attach_data(self, name, data, isSuccess = False):
         self.data[name] = data
-        if isSuccess:
-            self.data['status'] = True
+        self.data['status'] = isSuccess
 
     def get_response(self):
         return jsonify(self.data)
